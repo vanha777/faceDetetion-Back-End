@@ -17,7 +17,8 @@ const dataBase = knex({
     ssl: {
       rejectUnauthorized: false
     }
-  });
+  }
+});
 //end.
 
 
