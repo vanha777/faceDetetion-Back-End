@@ -9,24 +9,22 @@ const getUser = require('./controllers/getUser.js');
 const images = require('./controllers/images.js');
 
 
-  //declareDatabase
-  const dataBase = knex({
-    client: 'pg',
-    connection: {
-      host : '127.0.0.1',
-      port : 5432,
-      user : '',
-      password : '',
-      database : 'smartBrain'
+//declareDatabase
+const dataBase = knex({
+  client: 'pg',
+  connection: {
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
     }
   });
-  //end.
+//end.
 
 
 
 
 //clarifai
-const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
+const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
 
 const stub = ClarifaiStub.grpc();
 
@@ -36,17 +34,17 @@ metadata.set("authorization", "Key a455bde74c14465d9cb8b10eb84fa4f7")
 
 const app = express();
 app.use(cors());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/',(req,res) =>{res.send('dataBase')});
+app.get('/', (req, res) => { res.send('dataBase') });
 
-app.post('/signin', signin.handleSignin(bcrypt,dataBase));
+app.post('/signin', signin.handleSignin(bcrypt, dataBase));
 
-app.post('/faceDetect', (req,res) => {faceDetect.handleFaceDetect(req,res)});
+app.post('/faceDetect', (req, res) => { faceDetect.handleFaceDetect(req, res) });
 
-app.post('/register',register.handleRegister(bcrypt,dataBase));
-   
+app.post('/register', register.handleRegister(bcrypt, dataBase));
+
 
 
 app.get('/profile/:id', getUser.getUser(dataBase))
@@ -60,6 +58,6 @@ app.put('/image', images.imagesCount(dataBase))
 
 
 
-app.listen(process.env.PORT || 3000 , () => {
-    console.log(`app is active on ${process.env.PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`app is active on ${process.env.PORT}`);
 })
