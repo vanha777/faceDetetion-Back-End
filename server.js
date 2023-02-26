@@ -60,6 +60,6 @@ app.put('/image', images.imagesCount(dataBase))
 
 
 
-app.listen(777, () => {
-    console.log('app is active');
+app.listen(process.env.PORT || 3000 , () => {
+    console.log(`app is active on ${process.env.PORT}`);
 })
