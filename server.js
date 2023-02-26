@@ -39,7 +39,7 @@ app.use(cors());
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-app.get('/',(req,res) =>{res.send(dataBase)});
+app.get('/',(req,res) =>{res.send('dataBase')});
 
 app.post('/signin', signin.handleSignin(bcrypt,dataBase));
 
