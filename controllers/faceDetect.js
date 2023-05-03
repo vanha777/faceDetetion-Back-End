@@ -4,7 +4,7 @@ const handleFaceDetect = (req, res) => {
     const stub = ClarifaiStub.grpc();
 
     const metadata = new grpc.Metadata();
-    metadata.set("authorization", "PRIVATE-KEY")
+    metadata.set("authorization", process.env.CLARIFAI_KEY)
     let url = req.body.Url;
     //This is clarifai call API function
     stub.PostModelOutputs(
